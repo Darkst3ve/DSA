@@ -1,0 +1,64 @@
+% LaTeX Template für Abgaben an der Universität Stuttgart
+% Autor: Sandro Speth
+% Bei Fragen: Sandro.Speth@studi.informatik.uni-stuttgart.de
+%-----------------------------------------------------------
+% Modul beinhaltet Befehl fuer Aufgabennummerierung,
+% sowie die Header Informationen.
+
+% Überschreibt enumerate Befehl, sodass 1. Ebene Items mit
+\renewcommand{\theenumi}{(\alph{enumi})}
+% (a), (b), etc. nummeriert werden.
+\renewcommand{\labelenumi}{\text{\theenumi}}
+
+% Counter für das Blatt und die Aufgabennummer.
+% Ersetze die Nummer des Übungsblattes und die Nummer der Aufgabe
+% den Anforderungen entsprechend.
+% Gesetz werden die counter in der hauptdatei, damit siese hier nicht jedes mal verändert werden muss
+% Beachte:
+% \setcounter{countername}{number}: Legt den Wert des Counters fest
+% \stepcounter{countername}: Erhöht den Wert des Counters um 1.
+\newcounter{sheetnr}
+\newcounter{exnum}
+
+% Befehl für die Aufgabentitel
+\newcommand{\exercise}[1]{\section*{Aufgabe \theexnum\stepcounter{exnum}: #1}} % Befehl für Aufgabentitel
+
+
+\definecolor{javared}{rgb}{0.6,0,0} % for strings
+\definecolor{javagreen}{rgb}{0.25,0.5,0.35} % comments
+\definecolor{javapurple}{rgb}{0.5,0,0.35} % keywords
+\definecolor{javadocblue}{rgb}{0.25,0.35,0.75} % javadoc
+\lstdefinestyle{Java}
+{
+    language=Java,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{javapurple}\bfseries,
+	stringstyle=\color{javared},
+	commentstyle=\color{javagreen},
+	morecomment=[s][\color{javadocblue}]{/**}{*/},
+	numbers=left,
+	numberstyle=\tiny\color{black},
+	stepnumber=2,
+	numbersep=10pt,
+	tabsize=4,
+	showspaces=false,
+	showstringspaces=false
+}
+
+\lstdefinestyle{CMD}
+{
+    basicstyle=\scriptsize\color{black}\ttfamily
+}
+
+% Formatierung der Kopfzeile
+% \ohead: Setzt rechten Teil der Kopfzeile mit
+% Namen und Matrikelnummern aller Bearbeiter
+\ohead{Lennart Duvenbeck (1234567)\\
+Timo Stoll (1234567)\\
+David Zheng (3321948)}
+% \chead{} kann mittleren Kopfzeilen Teil sezten
+% \ihead: Setzt linken Teil der Kopfzeile mit
+% Modulnamen, Semester und Übungsblattnummer
+\ihead{Datenstrukturen und Algorithmen\\
+Sommersemester 2018\\
+Übungsblatt \thesheetnr}
