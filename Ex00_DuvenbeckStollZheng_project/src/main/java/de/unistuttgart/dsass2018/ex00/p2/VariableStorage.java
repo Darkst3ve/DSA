@@ -3,7 +3,7 @@ package de.unistuttgart.dsass2018.ex00.p2;
 /**
  * Class for Uebungsblatt 0 - Aufgabe 2.
  * 
- * @author Lennart Duvenbeck | 12345678
+ * @author Lennart Duvenbeck | 2836913
  * @author Timo Stoll | 12345678
  * @author David Zheng | 12345678
  * 
