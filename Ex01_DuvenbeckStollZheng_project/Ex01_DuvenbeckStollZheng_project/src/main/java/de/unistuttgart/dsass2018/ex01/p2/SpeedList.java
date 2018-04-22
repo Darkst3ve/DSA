@@ -76,15 +76,23 @@ public class SpeedList<T> implements ISpeedList<T> {
 
 	@Override
 	public void prepend(T t) {
+		boolean overflow = false;
 		Node seventh = head;
 		for (int i = 1; i <= 7; i++) {
-			if (seventh.getNext() != null) {
+			if (seventh.getNext() == null) {
+				overflow = true;
+				break;
+			} else {
 				seventh = seventh.getNext();
 			}
 		}
 		Node n = new Node(t, head.getNext(), head.getEightNext());
 		head.setNext(n);
-		head.setEightNext(seventh);
+		if (overflow) {
+			head.setEightNext(null);
+		} else {
+			head.setEightNext(seventh);
+		}
 	}
 
 	@Override
@@ -120,6 +128,7 @@ public class SpeedList<T> implements ISpeedList<T> {
 		list.prepend(1);
 		System.out.println(list.getElementAt(5));
 		System.out.println(list.getNext8thElementOf(1));
+		System.out.println(list.size());
 	}
 
 }
