@@ -34,20 +34,45 @@
 % Aufgabe 1
 \exercise{}
 \begin{figure}[h]
-\centering
+\begin{center}
 \includegraphics[scale=0.5]{complexity.png}
 \caption{Auswertung der vorgegebenen Funktionen in halb-logarithmischer Darstellung}
+\end{center}
 \end{figure}
+Angabe der Reihenfolge der Funktionen nach ihrer asymptotischen Komplexität für $n \rightarrow \infty $\\
+\begin{center}
+\begin{tabular}{l r}
+$f_3=O(n!)$ & Faktoriell\\
+$f_5=O(2^n)$ & Exponentiell\\
+$f_6=O(n^3)$ & Polynomiell\\
+$f_2=O(n^2 \log(n))$ & Polynomiell\\
+$f_1=O(n)$ & Polynomiell\\
+$f_4=O(\log(n))$ & Logarithmisch\\
+\end{tabular}
+\end{center}
 
 
 % Aufgabe 2
 \exercise{}
 Lösung im beigefügten Eclipse-Projekt
+\newpage
 
 % Aufgabe 3
 \exercise{}
-TODO
+\renewcommand{\labelenumii}{\alph{enumii}}
+\begin{enumerate}
+\item{Die Schleife über i geht von $2 \cdot n$ bis Null wobei bei jeder Iteration der Wert von i um Eins reduziert wird. Die Komplexität dieser Schleife beträgt also $2n$. Die Schleife über j geht von 0 bis j wobei bei jeder Iteration der Wert von j um Zwei erhöht wird. Die Komplexität dieser Schleife beträgt also $\frac{n}{2}$. Insgesamt also ist die asymptotische Komplexität $O(n)$.}
 
+\item{Die Gesamtkomplexität von verschachtelten Schleifen ist das Produkt der einzelnen Komplexitäten. Die Schleife über i hat Komplexität $n$, die Schleife über j hat $\frac{n}{2}$ und die Schleife über k hat Komplexität $\frac{n}{6}$ (Wenn der Index der Schleife in jeder Iteration mit einem Wert addiert wird ist die Komplexität der Schleife die Differenz von Start- und Endwert geteilt durch die \glqq Schrittlänge\grqq). Die asymptotische Komplexität des Algorithmus beträgt also $O(n^3)$.}
+
+\item{Der Algorithmus ruft sich selbst rekursiv insgesamt n mal auf. Bei jeder Rekursion entstehen zwei Funktionsaufrufe. Also ist die asymptotische Komplexität $O(2^n)$. Es ist zu bemerken dass keinerlei Rechenoperationen durchgeführt werden, am Ende der Rekursion steht lediglich die Ausgabe von n.}
+
+\item{Nach Erreichen von $\frac{n}{2}$ wird die Schleife abgebrochen. Bis dahin wird in jeder Schleifeniteration mit Zwei multipliziert. Die Komplexität ist also die Lösung der Gleichung $2^x=\frac{n}{2}$ also $O(\log{n})$.}
+
+\item{Die Komplexität ist das Produkt der Komplexitäten der beiden Schleifen. Dass $n$ durch $\frac{n}{2}$ ersetzt wird ist dabei für die Abschätzung der Komplexität irrelevant. Die Komplexität der Schleife über i ist $n$ und die der Schleife über j $\log{n}$ da in jeder Iteration j verdoppelt wird. Insgesamt also ist die asymptotische Komplexität $O(n\log{n})$.}
+
+\item{Nur die Schleife über i hängt in ihrer Komplexität von n ab. Die Komplexität der Schleife über j ist bezüglich n konstant. Also ist die Gesamtkomplexität $O(n)$.}
+\end{enumerate}
 
 % Ende des Dokuments
 \end{document}
