@@ -44,4 +44,77 @@ public class SimpleList<T extends Comparable<T>> implements ISimpleListIterable<
 		list.set(j, tmp);
 	}
 
+	private class simpleIterator implements Iterator<T> {
+		private int index;
+
+		public simpleIterator() {
+			index = 0;
+		}
+
+		@Override
+		public boolean hasNext() {
+			return index >= list.size();
+		}
+
+		@Override
+		public T next() {
+			if (!this.hasNext()) {
+				index++;
+				return list.get(index - 1);
+			} else {
+				throw new NoSuchElementException();
+			}
+		}
+
+		@Override
+		public void remove() {
+			throw new UnsupportedOperationException();
+		}
+	}
+
+	private class skippingIterator implements Iterator<T> {
+
+		private int index;
+		private int step = 1;
+
+		public skippingIterator(int n) {
+			index = 0;
+			if (n < 1) {
+				throw new IllegalArgumentException();
+			}
+			step = n;
+		}
+
+		@Override
+		public boolean hasNext() {
+			return index >= list.size();
+		}
+
+		@Override
+		public T next() {
+			if (!this.hasNext()) {
+				index += step;
+				return list.get(index - step);
+			} else {
+				throw new NoSuchElementException();
+			}
+		}
+
+		@Override
+		public void remove() {
+			throw new UnsupportedOperationException();
+		}
+
+	}
+
+	@Override
+	public Iterator<T> iterator() {
+		return new simpleIterator();
+	}
+
+	@Override
+	public Iterator<T> skippingIterator(int n) {
+		return new skippingIterator(n);
+	}
+
 }
