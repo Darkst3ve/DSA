@@ -172,7 +172,7 @@ public class BinarySearchTree<T extends Comparable<T>> implements IBinarySearchT
 
 		@Override
 		public T next() {
-			while (!queue.isEmpty()) {
+			while (this.hasNext()) {
 				node = queue.poll();
 				if (node.getLeftChild() != null) {
 					queue.add(node.getLeftChild());
@@ -216,10 +216,26 @@ public class BinarySearchTree<T extends Comparable<T>> implements IBinarySearchT
 		test.insert(5);
 		test.insert(7);
 
-		Iterator<Integer> testIterator = test.iterator(TreeTraversalType.LEVELORDER);
+		Iterator<Integer> testIterator = test.iterator(TreeTraversalType.PREORDER);
 		while (testIterator.hasNext()) {
-			System.out.println(testIterator.next());
+			System.out.print(testIterator.next());
 		}
+		System.out.println();
+		testIterator = test.iterator(TreeTraversalType.INORDER);
+		while (testIterator.hasNext()) {
+			System.out.print(testIterator.next());
+		}
+		System.out.println();
+		testIterator = test.iterator(TreeTraversalType.POSTORDER);
+		while (testIterator.hasNext()) {
+			System.out.print(testIterator.next());
+		}
+		System.out.println();
+		testIterator = test.iterator(TreeTraversalType.LEVELORDER);
+		while (testIterator.hasNext()) {
+			System.out.print(testIterator.next());
+		}
+		System.out.println();
 	}
 
 }

@@ -10,9 +10,9 @@ package de.unistuttgart.dsass2018.ex04.p2;
  */
 public class LinkedListNode<T extends Comparable<T>> implements ILinkedListNode<T> {
 
-	private T var;
-	private ILinkedListNode<T> next;
-	private ILinkedListNode<T> prev;
+	private T var = null;
+	private ILinkedListNode<T> next = null;
+	private ILinkedListNode<T> prev = null;
 
 	@Override
 	public T getElement() {

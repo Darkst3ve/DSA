@@ -10,16 +10,21 @@ package de.unistuttgart.dsass2018.ex04.p2;
  */
 public class CircularLinkedList<T extends Comparable<T>> implements ICircularLinkedList<T> {
 
-	private ILinkedListNode<T> head;
+	private ILinkedListNode<T> head = new LinkedListNode<T>();
 	private int size = 0;
 
 	public CircularLinkedList() {
-		head.setNext(head);
-		head.setPrev(head);
 	}
 
 	@Override
 	public void append(T element) {
+		if (this.size == 0) { // If the list contains no elements the first one added becomes head
+			head.setElement(element);
+			head.setNext(head);
+			head.setPrev(head);
+			this.size = 1;
+			return;
+		}
 		ILinkedListNode<T> newNode = new LinkedListNode<T>();
 		ILinkedListNode<T> prevLast = head.getPrev();
 		newNode.setElement(element);
@@ -30,7 +35,7 @@ public class CircularLinkedList<T extends Comparable<T>> implements ICircularLin
 		newNode.setPrev(prevLast);
 		prevLast.setNext(newNode);
 
-		size++;
+		this.size++;
 	}
 
 	@Override
@@ -67,6 +72,23 @@ public class CircularLinkedList<T extends Comparable<T>> implements ICircularLin
 	@Override
 	public ILinkedListNode<T> getHead() {
 		return this.head;
+	}
+
+	public static void main(String[] args) {
+		ICircularLinkedList<Integer> test = new CircularLinkedList<Integer>();
+		test.append(0);
+		test.append(1);
+		test.append(2);
+		test.append(3);
+		test.append(4);
+		test.append(5);
+
+		System.out.println(test.size());
+		System.out.println(test.get(0));
+		System.out.println(test.get(1));
+		System.out.println(test.get(2));
+		System.out.println(test.get(3));
+		System.out.println(test.getHead().getElement());
 	}
 
 }
