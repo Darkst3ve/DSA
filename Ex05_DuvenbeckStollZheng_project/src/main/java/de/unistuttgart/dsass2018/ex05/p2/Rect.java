@@ -56,8 +56,8 @@ public class Rect extends CollisionObject {
 	/**
 	 * Checks if rectangle is initialized with proper values
 	 * 
-	 * @return True if parameters of the rectangle are initialized properly,
-	 *         else False
+	 * @return True if parameters of the rectangle are initialized properly, else
+	 *         False
 	 */
 	public boolean isInitialized() {
 
@@ -112,11 +112,19 @@ public class Rect extends CollisionObject {
 	}
 
 	/**
-	 * Implementation of the abstract function that computes the covered area of
-	 * a rectangle
+	 * Implementation of the abstract function that computes the covered area of a
+	 * rectangle
 	 */
 	public ArrayList<Point> coveredArea() {
-		// TODO: Insert code for Assignment 5.2 a
+		Point initialPoint = new Point((int) this.x, (int) this.y);
+		ArrayList<Point> grid = new ArrayList<Point>();
+		grid.add(initialPoint);
+		for (int i = 1; i <= (int) this.x + this.width + 1; i++) {
+			for (int j = 1; i <= (int) this.y + this.height + 1; i++) {
+				grid.add(new Point(i, j));
+			}
+		}
+		return grid;
 	}
 
 	/**
@@ -124,7 +132,12 @@ public class Rect extends CollisionObject {
 	 * colliding
 	 */
 	public boolean collisionWith(CollisionObject obj) {
-		// TODO: Insert code for Assignment 5.2 b
+		for (Point x : obj.coveredArea()) {
+			if (this.coveredArea().contains(x)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

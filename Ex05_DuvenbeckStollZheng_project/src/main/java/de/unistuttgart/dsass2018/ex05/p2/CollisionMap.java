@@ -23,8 +23,7 @@ public class CollisionMap {
 	 * Generates a CollisionMap from a list of CollisionObjects
 	 * 
 	 * @param rList
-	 *            List of obstacles that should be placed within the
-	 *            CollisionMap
+	 *            List of obstacles that should be placed within the CollisionMap
 	 */
 	public CollisionMap(ArrayList<Rect> rList) {
 
@@ -43,7 +42,11 @@ public class CollisionMap {
 	public Set<CollisionObject> getCollisionCandidates(CollisionObject obj) {
 
 		Set<CollisionObject> ret = new HashSet<CollisionObject>();
-		// TODO: Insert code for Assignment 5.2 d
+		for (CollisionObject a : rectObstacleList) {
+			if (a.collisionWith(obj)) {
+				ret.add(a);
+			}
+		}
 		return ret;
 	}
 
@@ -51,7 +54,11 @@ public class CollisionMap {
 	 * Fills the CollisionMap with the CollisionObjects
 	 */
 	public void fillCollisionMap() {
-		// TODO: Insert code for Assignment 5.2 c
+		for (CollisionObject a : rectObstacleList) {
+			for (Point b : a.coveredArea()) {
+				insertCollisionObject((int) b.x, (int) b.y, a);
+			}
+		}
 	}
 
 	/**
@@ -123,8 +130,8 @@ public class CollisionMap {
 	}
 
 	/**
-	 * Calculates the area that is needed in order to store all
-	 * CollisionObjects. Area is saved in gridArea.
+	 * Calculates the area that is needed in order to store all CollisionObjects.
+	 * Area is saved in gridArea.
 	 */
 	public void calcBoundingRect() {
 
