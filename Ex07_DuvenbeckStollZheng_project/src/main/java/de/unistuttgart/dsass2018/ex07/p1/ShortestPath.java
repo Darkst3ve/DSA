@@ -3,7 +3,6 @@ package de.unistuttgart.dsass2018.ex07.p1;
 import java.util.Iterator;
 import java.util.Stack;
 
-
 /**
  * Class for Uebungsblatt 7 - Aufgabe 3.
  * 
@@ -16,12 +15,13 @@ public class ShortestPath implements IShortestPath {
 
 	private final IWeightedGraph graph;
 	private final int startVertex;
-
+	private double[] distance;
+	private IEdge[] previousEdge;
 
 	/**
-	 * Initializes the shortest path for weighted graph <tt>graph</tt> from
-	 * starting vertex <tt>startVertex</tt>. Calls the bellmanFord(graph,
-	 * startVertex) method to execute the Bellman Ford algorithm.
+	 * Initializes the shortest path for weighted graph <tt>graph</tt> from starting
+	 * vertex <tt>startVertex</tt>. Calls the bellmanFord(graph, startVertex) method
+	 * to execute the Bellman Ford algorithm.
 	 * 
 	 * @param graph
 	 *            the weighted graph
@@ -31,42 +31,85 @@ public class ShortestPath implements IShortestPath {
 	public ShortestPath(IWeightedGraph graph, int startVertex) {
 		this.graph = graph;
 		this.startVertex = startVertex;
+		distance = new double[graph.numberOfVertices()];
+		previousEdge = new IEdge[graph.numberOfVertices()];
 		bellmanFord(this.graph, this.startVertex);
 	}
 
-
 	@Override
 	public void bellmanFord(IWeightedGraph graph, int startVertex) {
-		// TODO Auto-generated method stub
-		
-	}
+		for (int i = 0; i <= graph.numberOfVertices(); i++) {
+			distance[i] = Double.POSITIVE_INFINITY;
+		}
+		distance[startVertex] = 0;
 
+		for (int j = 0; j <= graph.numberOfVertices(); j++) {
+			while (graph.edgeIterator().hasNext()) {
+				IEdge x = graph.edgeIterator().next();
+				if (distance[x.getSource()] + x.getWeight() < distance[x.getDestination()]) {
+					distance[x.getDestination()] = distance[x.getSource()] + x.getWeight();
+					previousEdge[x.getDestination()] = x;
+				}
+			}
+		}
+	}
 
 	@Override
 	public boolean hasNegativeCycle() {
-		// TODO Auto-generated method stub
+		while (graph.edgeIterator().hasNext()) {
+			IEdge x = graph.edgeIterator().next();
+			if (distance[x.getSource()] + x.getWeight() < distance[x.getDestination()]) {
+				return true;
+			}
+		}
 		return false;
 	}
-
 
 	@Override
 	public double distanceTo(int destination) {
-		// TODO Auto-generated method stub
-		return 0;
+		if (this.hasNegativeCycle()) {
+			throw new IllegalStateException();
+		}
+		return distance[destination];
 	}
-
 
 	@Override
 	public boolean existsPathTo(int destination) {
-		// TODO Auto-generated method stub
-		return false;
+		return distance[destination] != Double.POSITIVE_INFINITY;
 	}
+	
+	private class pathIterator implements Iterator<IEdge>{
+		private int currentElement;
+		
+		public pathIterator(int n) {
+			currentElement = n;
+		}
 
+		@Override
+		public boolean hasNext() {
+			return previousEdge[currentElement].getSource() != startVertex;
+		}
+
+		@Override
+		public IEdge next() {
+			if (this.hasNext()) {
+				IEdge prev = previousEdge[currentElement];
+				currentElement = previousEdge[currentElement].getSource();
+				return prev;
+			}
+			return null;
+		}
+
+		
+	}
 
 	@Override
 	public Iterator<IEdge> pathTo(int destination) {
-		// TODO Auto-generated method stub
-		return null;
+		if (this.hasNegativeCycle()) {
+			throw new IllegalStateException();
+		}
+		
+		return new pathIterator(destination);
 	}
 
 }
