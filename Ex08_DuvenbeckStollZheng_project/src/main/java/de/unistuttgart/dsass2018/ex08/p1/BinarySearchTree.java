@@ -1,6 +1,8 @@
 package de.unistuttgart.dsass2018.ex08.p1;
 
 import java.awt.Point;
+import java.util.Iterator;
+import java.util.Stack;
 
 /**
  * Class for Uebungsblatt 8 - Aufgabe 3.
@@ -10,8 +12,7 @@ import java.awt.Point;
  * @author David Zheng | 3334362
  * 
  */
-public class BinarySearchTree<T extends Comparable<T>> implements
-		IBinarySearchTree<T> {
+public class BinarySearchTree<T extends Comparable<T>> implements IBinarySearchTree<T> {
 
 	private volatile IBinaryTreeNode<T> root;
 
@@ -24,8 +25,7 @@ public class BinarySearchTree<T extends Comparable<T>> implements
 		this.root = this.insert(this.root, t, 0, null);
 	}
 
-	private IBinaryTreeNode<T> insert(IBinaryTreeNode<T> node, T t, int lev,
-			IBinaryTreeNode<T> par) {
+	private IBinaryTreeNode<T> insert(IBinaryTreeNode<T> node, T t, int lev, IBinaryTreeNode<T> par) {
 		if (node == null) {
 			IBinaryTreeNode<T> newNode = new BinaryTreeNode<>();
 			newNode.setValue(t);
@@ -37,8 +37,7 @@ public class BinarySearchTree<T extends Comparable<T>> implements
 			node.setLeftChild(this.insert(node.getLeftChild(), t, lev + 1, node));
 		} else if (t.compareTo(node.getValue()) > 0) {
 			// Go right
-			node.setRightChild(this.insert(node.getRightChild(), t, lev + 1,
-					node));
+			node.setRightChild(this.insert(node.getRightChild(), t, lev + 1, node));
 		}
 		return node;
 	}
@@ -56,23 +55,77 @@ public class BinarySearchTree<T extends Comparable<T>> implements
 	private boolean isFull(IBinaryTreeNode<T> node) {
 		if (node == null) {
 			return true;
-		} else if ((node.getLeftChild() == null)
-				&& (node.getRightChild() == null)) {
+		} else if ((node.getLeftChild() == null) && (node.getRightChild() == null)) {
 			return true;
-		} else if ((node.getLeftChild() == null)
-				|| (node.getRightChild() == null)) {
+		} else if ((node.getLeftChild() == null) || (node.getRightChild() == null)) {
 			return false;
 		}
-		return this.isFull(node.getLeftChild())
-				&& this.isFull(node.getRightChild());
+		return this.isFull(node.getLeftChild()) && this.isFull(node.getRightChild());
+	}
+
+	class InorderIterator implements Iterator<IBinaryTreeNode<T>> {
+
+		private Stack<IBinaryTreeNode<T>> stack = new Stack<IBinaryTreeNode<T>>();
+		private IBinaryTreeNode<T> node;
+		public int depth = 0;
+
+		public InorderIterator(BinarySearchTree<T> tree) {
+			node = tree.getRootNode();
+		}
+
+		@Override
+		public boolean hasNext() {
+			return (!stack.isEmpty() || node != null);
+		}
+
+		@Override
+		public IBinaryTreeNode<T> next() {
+			while (this.hasNext()) {
+				if (node != null) {
+					stack.push(node);
+					node = node.getLeftChild();
+				} else {
+					node = stack.pop();
+					IBinaryTreeNode<T> returnNode = node;
+					node = node.getRightChild();
+					return returnNode;
+				}
+			}
+			return null;
+		}
+
+		@Override
+		public void remove() {
+			throw new UnsupportedOperationException();
+		}
 	}
 
 	@Override
 	public void calculatePositions() {
-		// TODO calculate the position for each node in the tree
-		// - the position of a node on the x-axis is calculated by its position in the in-order traversal (first node has x = 0)
-		// - the position of a node on the y-axis is calculated by its level in the tree (root has y = 0)
+		InorderIterator inorderIterator = new InorderIterator(this);
+		int xValue = 0;
+		int yValue = 0;
+		while (inorderIterator.hasNext()) {
+			IBinaryTreeNode<T> node = inorderIterator.next();
+			yValue = getDepth(node);
+			Point position = new Point(xValue, yValue);
+			xValue++;
+			node.setPosition(position);
+		}
 	}
 
+	private int getDepth(IBinaryTreeNode<T> node) {
+		IBinaryTreeNode<T> currentNode = this.getRootNode();
+		int depth = 0;
+		while(currentNode != node) {
+			if (currentNode.getValue().compareTo(node.getValue()) < 0) {
+				currentNode = currentNode.getRightChild();
+			} else {
+				currentNode = currentNode.getLeftChild();
+			}
+			depth++;
+		}
+		return depth;
+	}
 
 }
