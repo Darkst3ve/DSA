@@ -1,0 +1,4 @@
+^a...(a|b)$
+^(Apfel|Kirsch|Birn|Obst)baum(plantage)?$
+^Rebe(kk|k|ck|cc)a(h)?$
+^(((X|Y|Z)a(b)?)|(Bla(blabla)+))ooh..$
