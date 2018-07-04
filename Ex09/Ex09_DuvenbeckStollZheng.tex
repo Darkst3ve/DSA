@@ -33,7 +33,40 @@
 
 % Aufgabe 1
 \exercise{}
-TODO
+
+Teilaufgabe a:\\\\
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+\hline 
+Muster & g & g & h & f & g & g & h & f & g & f\\ 
+\hline 
+Längster Präfix & 0 & 1 & 0 & 0 & 1 & 2 & 3 & 4 & 5 & 0\\ 
+\hline 
+\end{tabular}
+\\\\
+Teilaufgabe b:
+\begin{table}[h!]
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline 
+Muster & g&g&h&f&h&g&g&h&g&g&h&f&g&g&h&f&g&g&h\\ 
+\hline 
+Index  & 1&2&3&4&5&6&7&8&9&10&11&12&13&14&15&16&17&18&19\\
+\hline
+\hline
+Muster &f&g&h&g&g&h&f&g&g&h&f&g&f&f&g&f&h&g&h\\
+\hline
+Index & 20&21&22&23&24&25&26&27&28&29&30&31&32&33&34&35&36&37&38\\ 
+\hline
+\end{tabular}
+\caption{Indices für $t_1$}
+\end{table}\\
+Suche ab 1: Mismatch bei 5. Längster Präfix hat Länge 0. Schiebe Suchposition nach 5.\\
+Suche ab 5: Mismatch beim ersten Index. Schiebe Suchposition nach 6.\\
+Suche ab 6: Mismatch bei 9. Längster Präfix hat Länge 0. Schiebe Suchposition nach 9.\\
+Suche ab 9: Mismatch bei 18. Längster Präfix hat Länge 5. Schiebe Suchposition nach 13.\\
+Suche ab 14: Mismatch bei 22. Längster Präfix hat Länge 5. Schiebe Suchposition nach 17.\\
+Suche ab 17: Mismatch bei 22. Längster Präfix hat Länge 1. Schiebe Suchposition nach 21.\\
+Suche ab 21: Mismatch bei 22. Längster Präfix hat Länge 0. Schiebe Suchposition nach 23.\\
+Suche ab 22: String $p_1$ gefunden.
 
 % Aufgabe 2
 \exercise{}
